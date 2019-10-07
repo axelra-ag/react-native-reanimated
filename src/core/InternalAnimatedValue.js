@@ -31,23 +31,20 @@ export default class InternalAnimatedValue extends AnimatedNode {
     );
   }
 
-  constructor(value) {
+  constructor(value, constant = false) {
     super({ type: 'value', value: sanitizeValue(value) });
     this._startingValue = this._value = value;
     this._animation = null;
+    this._constant = constant;
   }
 
   __detach() {
-    /*if (!this._constant) {
+    if (!this._constant) {
       ReanimatedModule.getValue(
         this.__nodeID,
         val => (this.__nodeConfig.value = val)
       );
-    }*/
-    ReanimatedModule.getValue(
-      this.__nodeID,
-      val => (this.__nodeConfig.value = val)
-    );
+    }
 
     this.__detachAnimation(this._animation);
     super.__detach();
