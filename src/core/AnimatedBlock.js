@@ -3,6 +3,7 @@ import { val } from '../val';
 import InternalAnimatedValue from './InternalAnimatedValue';
 
 class AnimatedBlock extends AnimatedNode {
+  //class changed
   _array;
 
   constructor(array) {
