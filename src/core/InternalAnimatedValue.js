@@ -31,11 +31,10 @@ export default class InternalAnimatedValue extends AnimatedNode {
     );
   }
 
-  constructor(value, constant = false) {
+  constructor(value) {
     super({ type: 'value', value: sanitizeValue(value) });
     this._startingValue = this._value = value;
     this._animation = null;
-    this._constant = constant;
   }
 
   __detach() {
