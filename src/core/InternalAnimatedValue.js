@@ -11,7 +11,7 @@ function sanitizeValue(value) {
 const CONSTANT_VALUES = new Map();
 
 function initializeConstantValues() {
-  if (CONSTANT_VALUES.size != 0) {
+  if (CONSTANT_VALUES.size !== 0) {
     return;
   }
   [0, -1, 1, -2, 2].forEach(v =>
@@ -39,12 +39,17 @@ export default class InternalAnimatedValue extends AnimatedNode {
   }
 
   __detach() {
-    if (!this._constant) {
+    /*if (!this._constant) {
       ReanimatedModule.getValue(
         this.__nodeID,
         val => (this.__nodeConfig.value = val)
       );
-    }
+    }*/
+    ReanimatedModule.getValue(
+      this.__nodeID,
+      val => (this.__nodeConfig.value = val)
+    );
+
     this.__detachAnimation(this._animation);
     super.__detach();
   }
