@@ -25,10 +25,11 @@ function initializeConstantValues() {
  */
 export default class InternalAnimatedValue extends AnimatedNode {
   static valueForConstant(number) {
-    initializeConstantValues();
+    /*initializeConstantValues();
     return (
       CONSTANT_VALUES.get(number) || new InternalAnimatedValue(number, true)
-    );
+    );*/
+    return new InternalAnimatedValue(number, true);
   }
 
   constructor(value, constant = false) {
