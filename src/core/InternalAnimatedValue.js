@@ -8,16 +8,17 @@ function sanitizeValue(value) {
     : Number(value);
 }
 
-let CONSTANT_VALUES;
+const CONSTANT_VALUES = new Map();
+const KNOWN_CONSTANTS = [0, -1, 1, -2, 2];
 
-/*function initializeConstantValues() {
+function initializeConstantValues() {
   if (CONSTANT_VALUES.size !== 0) {
     return;
   }
-  [0, -1, 1, -2, 2].forEach(v =>
+  KNOWN_CONSTANTS.forEach(v =>
     CONSTANT_VALUES.set(v, new InternalAnimatedValue(v, true))
   );
-}*/
+}
 
 /**
  * This class has been made internal in order to omit dependencies' cycles which
@@ -25,8 +26,12 @@ let CONSTANT_VALUES;
  */
 export default class InternalAnimatedValue extends AnimatedNode {
   static valueForConstant(number) {
-    //initializeConstantValues();
-    if (CONSTANT_VALUES.get(number)) {
+    initializeConstantValues();
+    let constantFound = KNOWN_CONSTANTS.find(item => {
+      return item === number;
+    });
+
+    if (constantFound) {
       return CONSTANT_VALUES.get(number);
     } else {
       return new InternalAnimatedValue(number, true);
@@ -41,14 +46,6 @@ export default class InternalAnimatedValue extends AnimatedNode {
     this._startingValue = this._value = value;
     this._animation = null;
     this._constant = constant;
-
-    CONSTANT_VALUES = {
-      '0': new InternalAnimatedValue(0, true),
-      '-1': new InternalAnimatedValue(0, true),
-      '1': new InternalAnimatedValue(0, true),
-      '-2': new InternalAnimatedValue(0, true),
-      '2': new InternalAnimatedValue(0, true),
-    };
   }
 
   __detach() {
