@@ -11,7 +11,7 @@ function sanitizeValue(value) {
 const CONSTANT_VALUES = new Map();
 
 function initializeConstantValues() {
-  if (CONSTANT_VALUES.size != 0) {
+  if (CONSTANT_VALUES.size !== 0) {
     return;
   }
   [0, -1, 1, -2, 2].forEach(v =>
@@ -25,10 +25,11 @@ function initializeConstantValues() {
  */
 export default class InternalAnimatedValue extends AnimatedNode {
   static valueForConstant(number) {
-    initializeConstantValues();
+    /*initializeConstantValues();
     return (
       CONSTANT_VALUES.get(number) || new InternalAnimatedValue(number, true)
-    );
+    );*/
+    return new InternalAnimatedValue(number, true);
   }
 
   constructor(value, constant = false) {
@@ -49,6 +50,7 @@ export default class InternalAnimatedValue extends AnimatedNode {
         this.__nodeConfig.value = this.__getValue();
       }
     }
+
     this.__detachAnimation(this._animation);
     super.__detach();
   }
